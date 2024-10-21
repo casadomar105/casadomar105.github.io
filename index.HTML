@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Casa do Mar</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.7.1/dist/jszip.min.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
+
+    <style>
+        body {
+            font-family: calibri, sans-serif;
+            background-color: #f2f6fa;
+            color: #333;
+
+        }
+
+/* Centraliza o container do formulário */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center; /* Alinhar verticalmente */
+    gap: 20px; /* Espaçamento entre os elementos */
+
+
+/* Estiliza o Título Geral */
+
+        h1 {
+            text-align: center;
+            color: #004080;
+            
+        }
+
+.titulo-e-imagem {
+  display: flex;
+  align-items: center; /* Alinhar verticalmente */
+  justify-content: center; /* Alinhar horizontalmente */  border: 2px solid #004080;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+}
+
+.titulo {
+  margin-right: 40px; /* Espaço entre o texto e a imagem */
+}
+
+.imagem {
+  width: auto;
+  height: 70px;
+}
+
+
+/* Estiliza o formulário para centralizar e justificar */
+
+form {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Distribui o espaço igualmente */
+    align-items: baseline; /* Alinha verticalmente à base */
+    gap: 5px;
+    
+
+/* Estiliza os rótulos */
+
+        label {
+            display: block;
+            font-weight: bold;
+            font-size: 13px;
+            color: #004080;
+            margin-bottom: 4px;
+                    }
+
+.label-inferior {
+    font-weight: normal;
+    font-size: 12px; /* Tamanho da fonte */
+    color: #004080; /* Cor do texto */
+    margin-top: 2px; /* Margem superior */
+    display: block; /* Exibir como bloco */
+}
+
+.label-inferior-pgto {
+    
+    font-size: 14px; /* Tamanho da fonte */
+    color: #004080; /* Cor do texto */
+    margin-top: 6px; /* Margem superior */
+    display: block; /* Exibir como bloco */
+   }
+
+/* Estiliza os títulos das sessões */
+
+        .section-title {
+            background-color: #004080;
+            width: 100%;
+            padding: 5px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: center;
+        }
+
+ .section-diviser {
+            background-color: #F8F9FA;
+            width: 100%;
+            padding: 1px;
+            border: 1px solid #E2E3E3;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            color: #004080;
+            font-weight: bold;
+            text-align: center;
+            font-size: 14px;
+        }
+
+
+/* Caixas de Entrada de Texto */
+       
+input, select {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    text-align: left; /* Texto alinhado à esquerda */
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
+    }
+
+
+/* Centralizar conteúdo caixas de entrada de texto */
+
+.styled-input {    
+    text-align: center;
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
+   }
+
+/* Centralizar conteúdo e estilizar Caixa Valor Total */
+
+.styled-input-valortotal {    
+    text-align: center;
+    font-weight: bold;
+    background-color: #e8f3ff;
+    border: 1px solid #004080;
+   }
+        
+
+ /* Dimensões Caixas de Texto - Grupos de Formulário */            
+         
+        .form-group20 {
+            width: 20%
+        }
+
+        .form-group30 {
+            width: calc(35% - 20px); /* A largura será x% menos x pixels */
+
+        }
+
+        .form-group45 {
+            width: 45%;
+        }
+
+        .form-group60 {
+            width: calc(60% - 20px); /* A largura será x% menos x pixels */
+        }
+
+        .form-group.full-width {
+            width: 100%;
+        }
+
+        button {
+            background-color: #004080;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0066cc;
+        }
+
+
+/* Alerta de Erro */
+
+.error-message {
+    color: red;
+    font-size: 11px;
+    margin-top: 2px;
+    display: none;
+}
+
+/* Acordion Termos & Condições */
+
+   .accordion {
+            cursor: pointer;
+            padding: 5px;
+            width: 100%;
+            text-align: left;
+            border: 1px solid #004080;
+            background-color: #fff;
+            color: #004080;
+        }
+
+        .active, .accordion:hover {
+            background-color: #F2F6FA;
+        }
+
+        .accordion:after {
+            content: '\002B';
+            font-size: 13px;
+            color: #777;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2212";
+        }
+
+        .panel {
+            padding: 0 15px;
+            display: none;
+            background-color: white;
+            overflow: hidden;
+        }
+
+        .panel-content {
+           color: #333; /* Cor do texto */
+           font-size: 14px; /* Tamanho da fonte */
+           padding: 1px; /* Espaçamento interno */
+           margin: 2px;
+    }
+
+
+/* Área de Pagamento */
+
+.form-group-pgto-check {
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center; /* Alinhar verticalmente */
+    
+}
+
+.form-group-pgto {
+    width: 25%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center; /* Alinhar verticalmente */
+    text-align: center;
+
+}
+
+.moldura {
+  
+  background-color: #E8F3FF;
+  border: 0px solid #004080; /* Borda azul */
+  padding: 3px; /* Espaçamento interno */
+  border-radius: 5px; /* Bordas arredondadas */
+  text-align: center; /* Centralizar o texto */
+  width: 100%
+ 
+}
+
+
+
+/* Área de Upload */
+
+        .upload-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            width: 100%;
+        }
+
+        .upload-container label {
+           display: block;
+           margin-bottom: 5px;
+           font-weight: bold;
+        }
+
+
+/* Área de Configuração */
+
+.configuracao {
+    margin-top: 20px;
+}
+
+#configuracaoArea, #areaProtegida {
+    margin-top: 10px;
+}
+
+.styled-input-config {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 30%;
+    border-radius: 5px;
+        
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/* TERMOS E CONDIÇÕES */
+
+.checkbox-container {
+            display: flex;
+            align-items: center;
+            width: 5%;
+        }
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 5px;
+            flex-shrink: 1; /* Para garantir que o checkbox não diminua */
+        }
+        .checkbox-container label {
+            flex-grow: 1; /* Faz o label ocupar o espaço restante */
+            white-space: nowrap; /* Garante que o texto não quebre em várias linhas */
+        }  
+
+     
+    </style>
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <div class="titulo-e-imagem">
+  <h1 class="titulo">Cadastro de Reserva - Casa do Mar</h1>
+  <img src="https://www.jotform.com/uploads/camilotorquato/form_files/CASA%20DO%20MAR_pq.62f418c0a2e006.35243533.png" alt="Casa do Mar" class="imagem">
+</div>
+<form id="reservaForm" enctype="multipart/form-data">
+        
+<!-- Dados do Hóspede -->
+        <div class="section-title">DADOS DO HÓSPEDE</div>
+   
+            <div class="form-group60">
+                <label for="nomeHospede">NOME COMPLETO*</label>
+                <input type="text" id="nomeHospede" name="nomeHospede">
+            </div>
+            
+           <div class="form-group20">
+                <label for="nascimentoHospede">DATA DE NASCIMENTO*</label>
+                <input type="text" id="nascimentoHospede" name="nascimentoHospede" class="styled-input" placeholder="dd/mm/aaaa" onfocus="this.placeholder = ''" oninput="formatarData(this)" onblur="validarData(this)">
+                <span id="dataError" class="error-message">Data inválida</span>
+           </div>
+
+
+           <div class="form-group20">
+               <label for="cpfHospede">CPF*</label>
+               <input type="text" id="cpfHospede" name="cpfHospede" placeholder="000.000.000-00" onfocus="this.placeholder = ''" oninput="formatarCPF(this)" onblur="validarCPF(this)" class="styled-input">
+                <span id="cpfError" class="error-message">CPF inválido</span>
+            </div>
+
+            <div class="form-group60">
+                <label for="enderecoHospede">ENDEREÇO*</label>
+                <input type="text" id="enderecoHospede" name="enderecoHospede">
+            </div>
+
+            <div class="form-group20">
+                <label for="complementoHospede">COMPLEMENTO</label>
+                <input type="text" id="complementoHospede" name="complementoHospede">
+            </div>
+
+ <div class="form-group20">
+               <label for="cepHospede">CEP*</label>
+               <input type="text" id="cepHospede" name="cepHospede" placeholder="00000-000" onfocus="this.placeholder = ''" oninput="formatarCEP(this)" onblur="validarCEP(this)" class="styled-input">
+               <span id="cepError" class="error-message">CEP inválido</span>
+           </div>
+
+            <div class="form-group30">
+                <label for="bairroHospede">BAIRRO*</label>
+                <input type="text" id="bairroHospede" name="bairroHospede">
+            </div>
+         
+           <div class="form-group30">
+                <label for="cidadeHospede">CIDADE*</label>
+                <input type="text" id="cidadeHospede" name="cidadeHospede">
+            </div>
+
+            <div class="form-group30">
+                <label for="estadoHospede">ESTADO*</label>
+                <input type="text" id="estadoHospede" name="estadoHospede">
+            </div>
+
+            <div class="form-group30">
+                <label for="paisHospede">PAÍS*</label>
+                <input type="text" id="paisHospede" name="paisHospede">
+            </div>
+
+            <div class="form-group20">
+               <label for="telefoneHospede">TELEFONE*</label>
+               <input type="text" id="telefoneHospede" name="telefoneHospede" placeholder="(00) 00000-0000" onfocus="this.placeholder = ''"  oninput="formatarTelefone(this)" onblur="validarTelefone(this)" class="styled-input">
+               <span id="telefoneError" class="error-message">Telefone inválido</span>
+            </div> 
+
+            <div class="form-group45">
+              <label for="emailHospede">E-MAIL*</label>
+             <input type="email" id="emailHospede" name="emailHospede" placeholder="nome@exemplo.com" onfocus="this.placeholder = ''" onblur="validarEmail(this)" class="styled-input">
+             <span id="emailError" class="error-message">E-mail inválido</span>
+            </div>
+ 
+          
+<!-- Dados da Locação -->
+
+            <div class="section-title">DADOS DA LOCAÇÃO</div>
+            <div class="form-group30">
+                <label for="checkin">CHECK-IN</label>
+                <input type="date" id="checkin" name="checkin" class="styled-input">
+            </div>
+            <div class="form-group30">
+                <label for="checkout">CHECK-OUT</label>
+                <input type="date" id="checkout" name="checkout" disabled class="styled-input">
+            </div>
+            <div class="form-group30">
+                <label for="numNoites">NOITES (mínimo 2)</label>
+                <input type="number" id="numNoites" name="numNoites" class="styled-input" readonly>
+            </div>
+
+
+           <div class="form-group30">
+    <label for="numHospedes">HÓSPEDES</label>
+    <input type="number" id="hospedes" name="hospedes" value="1" min="1" max="12" class="styled-input">
+    <label for="numHospedes" class="label-inferior">máximo 12</label>
+</div>
+
+<div class="form-group30">
+    <label for="numCriancas">CRIANÇA</label>
+    <input type="number" id="criancas" name="criancas" value="0" min="0" class="styled-input">
+    <label for="criancas" class="label-inferior">até 2 anos</label>
+</div>
+
+
+         <div class="form-group30">
+    <label for="valorDiaria">VALOR DA DIÁRIA (R$)</label>
+    <input type="number" id="valorDiaria" name="valorDiaria" value="600" class="styled-input" readonly>
+    <label for="valorDiaria" class="label-inferior">até 6 pessoas o valor é fixo</label>
+</div>
+
+            <div class="form-group30">
+                <label for="taxaLimpeza">TAXA DE LIMPEZA (R$)</label>
+                <input type="number" id="taxaLimpeza" name="taxaLimpeza" class="styled-input" readonly>
+            </div>
+
+            <div class="form-group30">
+                <label for="desconto">DESCONTO (%)</label>
+                <input type="number" id="desconto" name="desconto" class="styled-input" readonly>
+                <label for="desconto" class="label-inferior">a partir de 7 noites</label> 
+            </div>
+
+            <div class="form-group30">
+  <label for="total">TOTAL (R$)</label>
+  <input type="text" id="valorTotal" name="valorTotal" value="0,00" class="styled-input-valortotal" readonly>
+</div>
+
+
+
+<!-- Forma de Pagamento -->
+
+<div class="section-title">FORMA DE PAGAMENTO</div>
+
+<div class="form-group-pgto-check">
+<label for="avista">À VISTA</label>
+    <input type="radio" id="avista" name="pagamento" value="avista" onclick="toggleInputs(false)">
+<label for="avista" class="label-inferior">Pix</label>  
+</div>
+
+<div class="form-group-pgto-check">
+<label for="aprazo">À PRAZO</label>
+    <input type="radio" id="aprazo" name="pagamento" value="aprazo" onclick="toggleInputs(true)">
+<label for="avista" class="label-inferior">Pix/Mês</label>
+    
+</div>
+<div class="form-group-pgto">
+    <label for="numParcelas">NÚMERO DE PARCELAS:</label>
+    <input type="number" id="numParcelas" name="numParcelas" min="1" max="12" value="1" class="styled-input" oninput="calcularValorParcela()" onkeypress="return false;" disabled>
+</div>
+
+<div class="form-group-pgto">
+    <label for="valorParcela">VALOR DA PARCELA (R$):</label>
+    <input type="text" id="valorParcela" name="valorParcela" class="styled-input" readonly>
+</div>
+
+<div class="moldura">
+  <div class="label-inferior-pgto">*Nenhuma cobrança será realizada neste ato. Registre apenas a intenção de pagamento acordada previamente com a administração*</div>
+</div>
+
+
+
+
+ <!-- Anexar Arquivos - UPLOAD -->
+
+            <div class="section-title">ANEXAR DOCUMENTOS</div>
+<div class="upload-container">
+    <div class="form-group">
+        <label for="documento">DOCUMENTO (CNH, RG ou CPF)*</label>
+        <input type="file" id="documento" name="documento">
+        <label for="documento" class="label-inferior">Anexar Documento</label>
+    </div>
+    <div class="form-group">
+        <label for="comprovanteResidencia">COMPROVANTE DE RESIDÊNCIA*</label>
+        <input type="file" id="comprovanteResidencia" name="comprovanteResidencia">
+        <label for="comprovanteResidencia" class="label-inferior">Anexar Documento</label>
+    </div>
+</div>
+
+
+
+ <!-- Regras da Locação -->
+
+            <div class="section-title">TERMOS & CONDIÇÕES</div>
+
+<button class="accordion">Política da Casa</button>
+    <div class="panel">
+        <p class="panel-content">+ Estritamente proibido som alto e barulho excessivo;</p>
+        <p class="panel-content">+ Não são permitidas festas ou eventos;</p>
+        <p class="panel-content">+ Não ultrapassar o limite de hóspedes acordado;</p>
+        <p class="panel-content">+ Troca de enxoval ou peça(s) extra(s) serão cobradas;</p>
+        <p class="panel-content">+ Faxina(s) extra(s) são de responsabilidade do hóspede;</p>
+        <p class="panel-content">+ Não repomos material de limpeza e higiene pessoal;</p>
+        <p class="panel-content">+ Devolver imóvel com louça lavada e lixo recolhido;</p>
+        <p class="panel-content">+ Preservar a higiene e a conservação do imóvel e seus bens.</p>
+     </div>
+    
+<button class="accordion">Cobertura de Danos</button>
+    <div class="panel">
+        <p class="panel-content">O hóspede será responsável pelo ressarcimento monetário em eventuais perdas e/ou danos ao imóvel ou seus bens. Para tanto, será considerado o valor de mercado para a cobrança e cobertura do patrimônio.</p>
+    </div>
+    
+<button class="accordion">Política de Cancelamento</button>
+    <div class="panel">
+        <p class="panel-content">Não haverá reembolso do pagamento já antecipado para cancelamento solicitado pelo hóspede com 15 dias ou menos de antecedência do início da locação (à excessão de restrições impostas nos entes federativos por motivos de força maior).</p>
+    </div>
+
+    <div class="checkbox-container">
+        <input type="checkbox" id="concordo" name="concordo">
+        <label for="concordo">DECLARO ESTAR DE ACORDO COM OS TERMOS E CONDIÇÕES.</label>
+        <span id="termosError" class="error-message">Você deve concordar com os termos e condições.</span>
+    </div>
+
+
+<!-- Número da Solicitação/Data -->
+
+<div class="section-diviser">
+ <span>Solicitação n°: <span id="dataAtual"></span></span>
+    </div>
+
+
+ <!-- Configurações -->
+
+<div class="configuracao">
+    <button onclick="mostrarPopup()">Configurações</button>
+
+    <div id="configuracaoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharPopup()">&times;</span>
+            <div id="configuracaoArea">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" class="styled-input-config">
+                <button onclick="verificarSenha()">Entrar</button>
+            </div>
+
+
+ <!-- Atualizar Valores: Diária, Taxa Limpeza, Hóspede Extra -->
+
+            <div id="areaProtegida" style="display: none;">
+                <label for="valorDiariaConfig">DIÁRIA:</label>
+                <input type="number" id="valorDiariaConfig" value="600" class="styled-input-config">
+                <label for="taxaLimpezaConfig">TAXA DE LIMPEZA:</label>
+                <input type="number" id="taxaLimpezaConfig" name="taxaLimpezaConfig" value="280" class="styled-input-config" oninput="syncValues()">
+                <label for="hospedeExtraConfig">HÓSPEDE EXTRA:</label>
+                <input type="number" id="hospedeExtraConfig" value="100" class="styled-input-config">
+                <button onclick="salvarConfiguracao()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Botões de Ações -->
+            
+            <input type="file" id="arquivoJSON" accept=".json" style="display: none;" onchange="carregarJSON()" />
+            <button type="button" onclick="document.getElementById('arquivoJSON').click()">Carregar Json</button>
+            <button type="button" onclick="gerarPDF()">Gerar PDF</button>
+            <button type="button" onclick="salvarExcel()">Salvar Excel</button>
+            <button type="button" onclick="salvarJSON()">Gerar Json</button>
+
+
+        </form>
+    </div>
+
+<script>
+
+document.getElementById('hospedes').addEventListener('keypress', function(event) {
+    event.preventDefault(); // Previne a entrada de texto
+});
+
+document.getElementById('criancas').addEventListener('keypress', function(event) {
+    event.preventDefault(); // Previne a entrada de texto
+});
+
+
+
+// Função formatar e validar Data
+
+function formatarData(campo) {
+    let valor = campo.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    if (valor.length > 8) {
+        valor = valor.slice(0, 8);
+    }
+    if (valor.length > 4) {
+        valor = valor.replace(/(\d{2})(\d{2})(\d)/, '$1/$2/$3');
+    } else if (valor.length > 2) {
+        valor = valor.replace(/(\d{2})(\d)/, '$1/$2');
+    }
+    campo.value = valor;
+}
+
+function validarData(campo) {
+    const dataPattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d\d$/;
+    const dataError = document.getElementById('dataError');
+    if (!dataPattern.test(campo.value)) {
+        dataError.style.display = 'inline';
+    } else {
+        dataError.style.display = 'none';
+    }
+}
+
+document.getElementById('nascimentoHospede').addEventListener('keypress', function(event) {
+    if (isNaN(String.fromCharCode(event.which)) && String.fromCharCode(event.which) !== '/') {
+        event.preventDefault(); // Previne a entrada de texto
+    }
+});
+
+
+// Função Data Atual
+
+
+ function formatarData(data) {
+            const dia = String(data.getDate()).padStart(2, '0');
+            const mes = String(data.getMonth() + 1).padStart(2, '0'); // Janeiro é 0!
+            const ano = data.getFullYear();
+            return `${dia}${mes}${ano}`; // Sem barras
+        }
+
+        const data = new Date();
+        document.getElementById('dataAtual').textContent = formatarData(data);
+
+
+
+// Função formatar e validar CPF
+ 
+function formatarCPF(campo) {
+    let valor = campo.value.replace(/\D/g, '');
+    if (valor.length > 11) {
+        valor = valor.slice(0, 11);
+    }
+    valor = valor.replace(/(\d{3})(\d)/, '$1.$2')
+                 .replace(/(\d{3})(\d)/, '$1.$2')
+                 .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    campo.value = valor;
+}
+
+function validarCPF(campo) {
+    const cpfPattern = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+    const cpfError = document.getElementById('cpfError');
+    if (!cpfPattern.test(campo.value)) {
+        cpfError.style.display = 'inline';
+    } else {
+        cpfError.style.display = 'none';
+    }
+}
+
+// Função formatar e validar CEP
+
+function formatarCEP(campo) {
+    let valor = campo.value.replace(/\D/g, '');
+    if (valor.length > 8) {
+        valor = valor.slice(0, 8);
+    }
+    valor = valor.replace(/(\d{5})(\d)/, '$1-$2');
+    campo.value = valor;
+}
+
+function validarCEP(campo) {
+    const cepPattern = /^\d{5}-\d{3}$/;
+    const cepError = document.getElementById('cepError');
+    if (!cepPattern.test(campo.value)) {
+        cepError.style.display = 'inline';
+    } else {
+        cepError.style.display = 'none';
+    }
+}
+
+// Função formatar e validar Telefone
+
+function formatarTelefone(campo) {
+    let valor = campo.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    if (valor.length > 11) {
+        valor = valor.slice(0, 11);
+    }
+    valor = valor.replace(/(\d{2})(\d)/, '($1) $2')
+                 .replace(/(\d{5})(\d)/, '$1-$2');
+    campo.value = valor;
+}
+
+function validarTelefone(campo) {
+    const telefonePattern = /^\(\d{2}\) \d{5}-\d{4}$/;
+    const telefoneError = document.getElementById('telefoneError');
+    if (!telefonePattern.test(campo.value)) {
+        telefoneError.style.display = 'inline';
+    } else {
+        telefoneError.style.display = 'none';
+    }
+}
+
+document.getElementById('telefoneHospede').addEventListener('keypress', function(event) {
+    if (isNaN(String.fromCharCode(event.which))) {
+        event.preventDefault(); // Previne a entrada de texto
+    }
+});
+
+// Função validar Email
+
+function validarEmail(campo) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailError = document.getElementById('emailError');
+
+    if (!emailPattern.test(campo.value)) {
+        emailError.style.display = 'inline';
+    } else {
+        emailError.style.display = 'none';
+    }
+}
+
+
+
+// Função para calcular o número de dias entre as datas de checkin e checkout  
+function calcularNoites() {   
+  const checkin = document.getElementById('checkin').value;   
+  const checkout = document.getElementById('checkout').value;   
+  const noites = document.getElementById('numNoites');   
+   
+  if (checkin && checkout) {   
+   const dataCheckin = new Date(checkin);   
+   const dataCheckout = new Date(checkout);   
+   const diferenca = dataCheckout.getTime() - dataCheckin.getTime();   
+   const noitesCalculadas = Math.round(diferenca / (1000 * 3600 * 24));   
+   
+   noites.value = noitesCalculadas;   
+   atualizarDesconto(); // Chama a função atualizarDesconto() aqui  
+   atualizarValorTotal(); // Chama a função atualizarValorTotal() aqui
+  }   
+}  
+
+// Função para atualizar o valor da diária com base no número de hóspedes
+function atualizarDiaria() {
+    const hospedes = parseInt(document.getElementById('hospedes').value, 10);
+    const diariaElement = document.getElementById('valorDiaria');
+
+    if (hospedes >= 7 && hospedes <= 12) {
+        const acrescimo = (hospedes - 6) * configuracoes.hospedeExtra;
+        diariaElement.value = configuracoes.valorDiaria + acrescimo;
+    } else {
+        diariaElement.value = configuracoes.valorDiaria;
+    }
+    atualizarValorTotal();
+}
+  
+// Função para atualizar o desconto  
+function atualizarDesconto() {   
+  const noites = document.getElementById('numNoites').value;   
+  const desconto = document.getElementById('desconto');   
+   
+  if (noites) {   
+   if (noites >= 7) {   
+    desconto.value = 5;   
+   } else {   
+    desconto.value = 0;   
+   }   
+  } else {   
+   desconto.value = '';   
+  }   
+}
+
+
+// Regras do Calendário para mínimo de 2 noites  
+
+document.getElementById('checkin').addEventListener('change', function() {
+    var checkinDate = new Date(this.value);
+    var checkoutDateInput = document.getElementById('checkout');
+    
+    if (checkinDate) {
+      // Habilitar o campo de data de check-out
+      checkoutDateInput.disabled = false;
+      
+      // Calcular a data mínima para o check-out (dois dias após o check-in)
+      var minCheckoutDate = new Date(checkinDate);
+      minCheckoutDate.setDate(minCheckoutDate.getDate() + 2);
+      
+      // Definir o valor mínimo do campo de data de check-out
+      checkoutDateInput.min = minCheckoutDate.toISOString().split('T')[0];
+    }
+  });
+
+
+// Adiciona evento de mudança nos campos de data para calcular as noites  
+
+document.getElementById('checkin').addEventListener('change', calcularNoites);  
+document.getElementById('checkout').addEventListener('change', calcularNoites);
+  
+// Bloqueia o campo "noite" para somente leitura  
+document.getElementById('numNoites').readOnly = true;
+
+
+// Função fomratar valor total em milhar 
+
+function formatarValorTotal(valor) {
+    // Converte para número flutuante
+    valor = parseFloat(valor).toFixed(2);
+    
+    // Se não for um número válido, retorna zero
+    if (isNaN(valor)) {
+        return '0,00';
+    }
+
+    // Converte o ponto decimal para vírgula
+    valor = valor.replace(".", ",");
+
+    // Adiciona os pontos de milhar
+    valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    return valor;
+}
+
+ 
+// Função para atualizar o valor total 
+ 
+function atualizarValorTotal() {
+    const noites = document.getElementById('numNoites').value;
+    const diaria = document.getElementById('valorDiaria').value;
+    const desconto = document.getElementById('desconto').value;
+    const taxaLimpeza = document.getElementById('taxaLimpeza').value;
+    const valorTotal = document.getElementById('valorTotal');
+    
+    if (noites) {
+        let valorTotalCalculado = noites * diaria;
+        
+        if (desconto >= 1) {
+            valorTotalCalculado = valorTotalCalculado * (1 - (desconto / 100));
+        }
+        
+        valorTotalCalculado = valorTotalCalculado + parseFloat(taxaLimpeza);
+        
+        // Formatar o valor total calculado
+        valorTotal.value = formatarValorTotal(valorTotalCalculado.toFixed(2));
+    } else {
+        valorTotal.value = '0,00';
+    }
+}
+
+  
+// Chama a função ao alterar o valor de qualquer um dos campos  
+document.getElementById('numNoites').addEventListener('onchange', atualizarValorTotal);  
+document.getElementById('valorDiaria').addEventListener('onchange', atualizarValorTotal);  
+document.getElementById('desconto').addEventListener('onchange', atualizarValorTotal);  
+document.getElementById('taxaLimpeza').addEventListener('onchange', atualizarValorTotal);  
+  
+// Chama a função ao carregar a página  
+atualizarValorTotal();
+
+document.getElementById('taxaLimpeza').readOnly = true;
+
+
+// Forma de Pagamento 
+
+function toggleInputs(enable) {
+  const numParcelasInput = document.getElementById('numParcelas');
+  const valorParcelaInput = document.getElementById('valorParcela');
+
+  numParcelasInput.disabled = !enable;
+  if (enable) {
+    numParcelasInput.value = 1;
+    calcularValorParcela();
+    numParcelasInput.addEventListener('keydown', function(event) {
+      event.preventDefault(); // Previne a entrada de texto
+    });
+  } else {
+    numParcelasInput.value = '';
+    valorParcelaInput.value = '';
+    numParcelasInput.removeEventListener('keydown', function(event) {
+      event.preventDefault(); // Previne a entrada de texto
+    });
+  }
+}
+
+function calcularValorParcela() {
+  const numParcelas = document.getElementById('numParcelas').value;
+  let valorTotal = document.getElementById('valorTotal').value;
+
+  // Remove pontos e converte vírgula para ponto para garantir que seja tratado como número
+  valorTotal = valorTotal.replace(/\./g, '').replace(',', '.');
+  valorTotal = parseFloat(valorTotal);
+
+  const valorParcela = valorTotal / numParcelas;
+  document.getElementById('valorParcela').value = isNaN(valorParcela) ? '' : valorParcela.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+
+// Função Accordions e checkbox 
+
+var accordions = document.getElementsByClassName("accordion");
+        for (var i = 0; i < accordions.length; i++) {
+            accordions[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+
+        document.getElementById('reservaForm').addEventListener('submit', function(event) {
+            var checkbox = document.getElementById('concordo');
+            var termosError = document.getElementById('termosError');
+            if (!checkbox.checked) {
+                event.preventDefault();
+                termosError.style.display = 'inline';
+            } else {
+                termosError.style.display = 'none';
+            }
+        });
+
+
+
+function syncValues() {
+    var taxaLimpezaConfig = document.getElementById('taxaLimpezaConfig').value;
+    document.getElementById('taxaLimpeza').value = taxaLimpezaConfig;
+  }
+
+  // Para sincronizar o valor inicial
+  window.addEventListener('DOMContentLoaded', (event) => {
+    syncValues();
+  });
+
+
+
+
+// Função Configuração
+
+const configuracoes = {
+    valorDiaria: 600,   // atualizar valor da diária  
+    hospedeExtra: 100, // atualizar valor do hóspede extra 
+    taxaLimpeza: 250
+};
+
+function sincronizarTaxaLimpeza() {
+    document.getElementById('taxaLimpeza').value = configuracoes.taxaLimpeza;
+}
+
+function mostrarPopup() {
+    document.getElementById('configuracaoModal').style.display = 'block';
+}
+
+function fecharPopup() {
+    document.getElementById('configuracaoModal').style.display = 'none';
+}
+
+function verificarSenha() {
+    const senha = document.getElementById('senha').value;
+    if (senha === 'casadomar@105') { // Substitua por sua senha real
+        document.getElementById('configuracaoArea').style.display = 'none';
+        document.getElementById('areaProtegida').style.display = 'block';
+    } else {
+        alert('Senha incorreta!');
+    }
+}
+
+
+// Função para carregar configurações
+function carregarConfiguracao() {
+    document.getElementById('valorDiariaConfig').value = configuracoes.valorDiaria;
+    document.getElementById('hospedeExtraConfig').value = configuracoes.hospedeExtra;
+    document.getElementById('taxaLimpezaConfig').value = configuracoes.taxaLimpeza;
+}
+
+// Função para salvar configurações
+function salvarConfiguracao() {
+    configuracoes.valorDiaria = parseFloat(document.getElementById('valorDiariaConfig').value);
+    configuracoes.hospedeExtra = parseFloat(document.getElementById('hospedeExtraConfig').value);
+    configuracoes.taxaLimpeza = parseFloat(document.getElementById('taxaLimpezaConfig').value);
+
+    document.getElementById('valorDiaria').value = configuracoes.valorDiaria;
+    document.getElementById('taxaLimpeza').value = configuracoes.taxaLimpeza;
+    alert('Configurações salvas com sucesso!');
+}
+
+// Chama a função ao alterar o valor do campo 'Hóspedes'
+document.getElementById('hospedes').addEventListener('change', atualizarDiaria);
+
+// Chama a função ao carregar a página
+atualizarDiaria();
+
+
+ // Gerar PDF
+
+function gerarPDF() {   
+  // Crie um objeto com os dados da reserva   
+  const dadosReserva = {   
+   nomeHospede: document.getElementById('nomeHospede').value,   
+   nascimentoHospede: document.getElementById('nascimentoHospede').value,   
+   cpfHospede: document.getElementById('cpfHospede').value,   
+   enderecoHospede: document.getElementById('enderecoHospede').value,   
+   complementoHospede: document.getElementById('complementoHospede').value,   
+   cepHospede: document.getElementById('cepHospede').value,   
+   bairroHospede: document.getElementById('bairroHospede').value,   
+   cidadeHospede: document.getElementById('cidadeHospede').value,   
+   estadoHospede: document.getElementById('estadoHospede').value,   
+   paisHospede: document.getElementById('paisHospede').value,   
+   telefoneHospede: document.getElementById('telefoneHospede').value,   
+   emailHospede: document.getElementById('emailHospede').value,   
+   checkin: document.getElementById('checkin').value,   
+   checkout: document.getElementById('checkout').value,   
+   numNoites: document.getElementById('numNoites').value,   
+   numHospedes: document.getElementById('hospedes').value,   
+   numCriancas: document.getElementById('criancas').value,   
+   valorDiaria: document.getElementById('valorDiaria').value,   
+   taxaLimpeza: document.getElementById('taxaLimpeza').value,   
+   desconto: document.getElementById('desconto').value,   
+   total: document.getElementById('valorTotal').value,   
+   formaPagamento: document.querySelector('input[name="pagamento"]:checked').value,   
+   numParcelas: document.getElementById('numParcelas').value,   
+   valorParcela: document.getElementById('valorParcela').value   
+  };   
+   
+  // Crie o conteúdo do PDF   
+  const conteudoPDF = `   
+   <h1>Reserva - Casa do Mar</h1>   
+   <h2>Dados do Hóspede</h2>   
+   <p>Nome: ${dadosReserva.nomeHospede}</p>   
+   <p>Data de Nascimento: ${dadosReserva.nascimentoHospede}</p>   
+   <p>CPF: ${dadosReserva.cpfHospede}</p>   
+   <p>Endereço: ${dadosReserva.enderecoHospede}</p>   
+   <p>Complemento: ${dadosReserva.complementoHospede}</p>   
+   <p>CEP: ${dadosReserva.cepHospede}</p>   
+   <p>Bairro: ${dadosReserva.bairroHospede}</p>   
+   <p>Cidade: ${dadosReserva.cidadeHospede}</p>   
+   <p>Estado: ${dadosReserva.estadoHospede}</p>   
+   <p>País: ${dadosReserva.paisHospede}</p>   
+   <p>Telefone: ${dadosReserva.telefoneHospede}</p>   
+   <p>E-mail: ${dadosReserva.emailHospede}</p>   
+   <h2>Dados da Locação</h2>   
+   <p>Check-in: ${dadosReserva.checkin}</p>   
+   <p>Check-out: ${dadosReserva.checkout}</p>   
+   <p>Número de Noites: ${dadosReserva.numNoites}</p>   
+   <p>Número de Hóspedes: ${dadosReserva.numHospedes}</p>   
+   <p>Número de Crianças: ${dadosReserva.numCriancas}</p>   
+   <p>Valor da Diária: ${dadosReserva.valorDiaria}</p>   
+   <p>Taxa de Limpeza: ${dadosReserva.taxaLimpeza}</p>   
+   <p>Desconto: ${dadosReserva.desconto}%</p>   
+   <p>Total: ${dadosReserva.total}</p>   
+   <h2>Forma de Pagamento</h2>   
+   <p>Forma de Pagamento: ${dadosReserva.formaPagamento}</p>   
+   <p>Número de Parcelas: ${dadosReserva.numParcelas}</p>   
+   <p>Valor da Parcela: ${dadosReserva.valorParcela}</p>   
+  `;   
+   
+  // Crie o PDF   
+  const pdf = new jsPDF();   
+  pdf.fromHTML(conteudoPDF);   
+  pdf.save('reserva.pdf');   
+}
+
+
+ // Salvar JSON
+
+function salvarJSON() {  
+  const dadosReserva = {  
+        nomeHospede: document.getElementById('nomeHospede').value,
+        nascimentoHospede: document.getElementById('nascimentoHospede').value,
+        cpfHospede: document.getElementById('cpfHospede').value,
+        enderecoHospede: document.getElementById('enderecoHospede').value,
+        complementoHospede: document.getElementById('complementoHospede').value,
+        cepHospede: document.getElementById('cepHospede').value,
+        bairroHospede: document.getElementById('bairroHospede').value,
+        cidadeHospede: document.getElementById('cidadeHospede').value,
+        estadoHospede: document.getElementById('estadoHospede').value,
+        paisHospede: document.getElementById('paisHospede').value,
+        telefoneHospede: document.getElementById('telefoneHospede').value,
+        emailHospede: document.getElementById('emailHospede').value,
+        checkin: document.getElementById('checkin').value,
+        checkout: document.getElementById('checkout').value,
+        numNoites: document.getElementById('numNoites').value,
+        numHospedes: document.getElementById('hospedes').value,
+        numCriancas: document.getElementById('criancas').value,
+        valorDiaria: document.getElementById('valorDiaria').value,
+        taxaLimpeza: document.getElementById('taxaLimpeza').value,
+        desconto: document.getElementById('desconto').value,
+        total: document.getElementById('valorTotal').value,
+        formaPagamento: document.querySelector('input[name="pagamento"]:checked').value,
+        numParcelas: document.getElementById('numParcelas').value,
+        valorParcela: document.getElementById('valorParcela').value
+    };
+  
+  const json = JSON.stringify(dadosReserva);  
+  const blob = new Blob([json], { type: 'application/json' });  
+  const url = URL.createObjectURL(blob);  
+  const a = document.createElement('a');  
+  a.href = url;  
+  a.download = 'reserva.json';  
+  a.click();  
+}
+
+
+ // Carregar JSON
+
+function carregarJSON() {
+    const input = document.getElementById('arquivoJSON');
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+        const json = event.target.result;
+        const dadosReserva = JSON.parse(json); // Corrigir aqui: Parse o JSON
+
+        document.getElementById('nomeHospede').value = dadosReserva.nomeHospede;
+        document.getElementById('nascimentoHospede').value = dadosReserva.nascimentoHospede;
+        document.getElementById('cpfHospede').value = dadosReserva.cpfHospede;
+        document.getElementById('enderecoHospede').value = dadosReserva.enderecoHospede;
+        document.getElementById('complementoHospede').value = dadosReserva.complementoHospede;
+        document.getElementById('cepHospede').value = dadosReserva.cepHospede;
+        document.getElementById('bairroHospede').value = dadosReserva.bairroHospede;
+        document.getElementById('cidadeHospede').value = dadosReserva.cidadeHospede;
+        document.getElementById('estadoHospede').value = dadosReserva.estadoHospede;
+        document.getElementById('paisHospede').value = dadosReserva.paisHospede;
+        document.getElementById('telefoneHospede').value = dadosReserva.telefoneHospede;
+        document.getElementById('emailHospede').value = dadosReserva.emailHospede;
+        document.getElementById('checkin').value = dadosReserva.checkin;
+        document.getElementById('checkout').value = dadosReserva.checkout;
+        document.getElementById('numNoites').value = dadosReserva.numNoites;
+        document.getElementById('hospedes').value = dadosReserva.numHospedes;
+        document.getElementById('criancas').value = dadosReserva.numCriancas;
+        document.getElementById('valorDiaria').value = dadosReserva.valorDiaria;
+        document.getElementById('taxaLimpeza').value = dadosReserva.taxaLimpeza;
+        document.getElementById('desconto').value = dadosReserva.desconto;
+        document.getElementById('valorTotal').value = dadosReserva.total;
+        document.querySelector(`input[name="pagamento"][value="${dadosReserva.formaPagamento}"]`).checked = true;
+        document.getElementById('numParcelas').value = dadosReserva.numParcelas;
+        document.getElementById('valorParcela').value = dadosReserva.valorParcela;
+    };
+
+    reader.readAsText(file);
+}
+
+
+// Salvar XLSX (Planilha Excel)
+
+function salvarExcel() {
+            const dadosReserva = {
+                nomeHospede: document.getElementById('nomeHospede').value,
+                nascimentoHospede: document.getElementById('nascimentoHospede').value,
+                cpfHospede: document.getElementById('cpfHospede').value,
+                enderecoHospede: document.getElementById('enderecoHospede').value,
+                complementoHospede: document.getElementById('complementoHospede').value,
+                cepHospede: document.getElementById('cepHospede').value,
+                bairroHospede: document.getElementById('bairroHospede').value,
+                cidadeHospede: document.getElementById('cidadeHospede').value,
+                estadoHospede: document.getElementById('estadoHospede').value,
+                paisHospede: document.getElementById('paisHospede').value,
+                telefoneHospede: document.getElementById('telefoneHospede').value,
+                emailHospede: document.getElementById('emailHospede').value,
+                checkin: document.getElementById('checkin').value,
+                checkout: document.getElementById('checkout').value,
+                numNoites: document.getElementById('numNoites').value,
+                numHospedes: document.getElementById('hospedes').value,
+                numCriancas: document.getElementById('criancas').value,
+                valorDiaria: document.getElementById('valorDiaria').value,
+                taxaLimpeza: document.getElementById('taxaLimpeza').value,
+                desconto: document.getElementById('desconto').value,
+                total: document.getElementById('valorTotal').value,
+                formaPagamento: document.querySelector('input[name="pagamento"]:checked').value,
+                numParcelas: document.getElementById('numParcelas').value,
+                valorParcela: document.getElementById('valorParcela').value
+            };
+
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet([dadosReserva]);
+            XLSX.utils.book_append_sheet(wb, ws, "Reserva");
+
+            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+            const blob = new Blob([s2ab(wbout)], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'reserva.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            function s2ab(s) {
+                const buf = new ArrayBuffer(s.length);
+                const view = new Uint8Array(buf);
+                for (let i = 0; i < s.length; i++) {
+                    view[i] = s.charCodeAt(i) & 0xFF;
+                }
+                return buf;
+            }
+        }
+
+
+
+
+</script>
+
+</body>
+</html>
