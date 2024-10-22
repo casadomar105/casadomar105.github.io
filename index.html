@@ -646,8 +646,15 @@ input, select {
             <button type="button" onclick="salvarExcel()">Salvar Excel</button>
             <button type="button" onclick="salvarJSON()">Gerar Json</button>
             <button type="submit">Enviar</button>
-
         </form>
+
+        <!-- Modal -->
+<div id="modal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close" onclick="fecharModal()">&times;</span>
+    <p id="mensagemModal"></p>
+  </div>
+</div>
     </div>
 
 <script>
@@ -1291,6 +1298,17 @@ const form = document.getElementById("formulario");
                 console.error("Erro ao enviar o formulário: ", error);
             });
         });
+
+
+    function abrirModal(mensagem) {
+  document.getElementById('mensagemModal').innerText = mensagem;
+  document.getElementById('modal').style.display = "block";
+}
+
+function fecharModal() {
+  document.getElementById('modal').style.display = "none";
+}
+
 
 
 </script>
