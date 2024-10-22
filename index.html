@@ -648,11 +648,11 @@ input, select {
             <button type="submit">Enviar</button>
         </form>
 
-      <!-- Modal -->
-<div id="modal" class="modal" style="display:none;">
-  <div class="modal-content">
-    <span class="close" onclick="fecharModal()">&times;</span>
-    <p id="mensagemModal"></p>
+    <!-- Modal de Mensagem -->
+<div id="mensagemModal" class="mensagem-modal" style="display:none;">
+  <div class="mensagem-modal-content">
+    <span class="mensagem-close" onclick="fecharMensagemModal()">&times;</span>
+    <p id="mensagemTexto"></p>
   </div>
 </div>
         </div>
@@ -1281,14 +1281,15 @@ function salvarExcel() {
 
 
     
-function abrirModal(mensagem) {
-  document.getElementById('mensagemModal').innerText = mensagem;
-  document.getElementById('modal').style.display = "block";
+function abrirMensagemModal(mensagem) {
+  document.getElementById('mensagemTexto').innerText = mensagem;
+  document.getElementById('mensagemModal').style.display = "block";
 }
 
-function fecharModal() {
-  document.getElementById('modal').style.display = "none";
+function fecharMensagemModal() {
+  document.getElementById('mensagemModal').style.display = "none";
 }
+
 
 
     
@@ -1305,10 +1306,10 @@ const form = document.getElementById("formulario");
 })
 .then(response => response.text())
 .then(data => {
-  abrirModal('Dados enviados com sucesso.');
+  abrirMensagemModal('Dados enviados com sucesso!');
 })
 .catch(error => {
-  abrirModal('Erro ao enviar os dados: ' + error);
+  abrirMensagemModal('Erro ao enviar os dados: ' + error);
 });
 
 
