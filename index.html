@@ -655,6 +655,7 @@ input, select {
     <p id="mensagemModal"></p>
   </div>
 </div>
+        </div>
   
 
 <script>
@@ -1278,35 +1279,6 @@ function salvarExcel() {
             }
         }
 
-
-// Salvar XLSX (Planilha Google)
-    
-const form = document.getElementById("formulario");
-        form.addEventListener("submit", function(event) {
-            event.preventDefault();
-            
-            // Enviar os dados via fetch para o Google Apps Script
-           fetch('https://script.google.com/macros/s/AKfycbzOv1nGc5ry0HgdBhkvc0HfnxsAotqgyajuIOGke25BAaVCtT_LCzyId8n7z4a-uAvGkQ/exec', {
-  method: 'POST',
-  body: new URLSearchParams(dadosReserva)
-})
-.then(response => response.text())
-.then(data => {
-  abrirModal('Dados enviados com sucesso.');
-})
-.catch(error => {
-  abrirModal('Erro ao enviar os dados: ' + error);
-});
-
-
-    function abrirModal(mensagem) {
-  document.getElementById('mensagemModal').innerText = mensagem;
-  document.getElementById('modal').style.display = "block";
-}
-
-function fecharModal() {
-  document.getElementById('modal').style.display = "none";
-}
 
 
 
