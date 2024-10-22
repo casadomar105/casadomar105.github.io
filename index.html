@@ -391,7 +391,7 @@ input, select {
   <h1 class="titulo">Cadastro de Reserva - Casa do Mar</h1>
   <img src="https://www.jotform.com/uploads/camilotorquato/form_files/CASA%20DO%20MAR_pq.62f418c0a2e006.35243533.png" alt="Casa do Mar" class="imagem">
 </div>
-<form id="reservaForm" method="POST" action="https://script.google.com/macros/s/AKfycbxX06Dsu0UIfm9FdugS6pizYd0fsJNhuK6_eXDwnPIFfV8E7AMBCAZrRzWEnhUEV0wqMA/exec" enctype="multipart/form-data">
+<form id="reservaForm" method="POST" action="https://script.google.com/macros/s/AKfycbzOv1nGc5ry0HgdBhkvc0HfnxsAotqgyajuIOGke25BAaVCtT_LCzyId8n7z4a-uAvGkQ/exec" method="POST">
         
 <!-- Dados do Hóspede -->
         <div class="section-title">DADOS DO HÓSPEDE</div>
@@ -645,7 +645,7 @@ input, select {
             <button type="button" onclick="gerarPDF()">Gerar PDF</button>
             <button type="button" onclick="salvarExcel()">Salvar Excel</button>
             <button type="button" onclick="salvarJSON()">Gerar Json</button>
-            <input type="submit" value="Enviar">
+            <button type="submit">Enviar</button>
 
         </form>
     </div>
@@ -1272,6 +1272,25 @@ function salvarExcel() {
         }
 
 
+// Salvar XLSX (Planilha Google)
+    
+const form = document.getElementById("formulario");
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            // Enviar os dados via fetch para o Google Apps Script
+            fetch(form.action, {
+                method: "POST",
+                body: new FormData(form)
+            })
+            .then(response => response.text())
+            .then(result => {
+                alert(result); // Mensagem de sucesso ou erro
+            })
+            .catch(error => {
+                console.error("Erro ao enviar o formulário: ", error);
+            });
+        });
 
 
 </script>
