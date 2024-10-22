@@ -1286,18 +1286,17 @@ const form = document.getElementById("formulario");
             event.preventDefault();
             
             // Enviar os dados via fetch para o Google Apps Script
-            fetch(form.action, {
-                method: "POST",
-                body: new FormData(form)
-            })
-            .then(response => response.text())
-            .then(result => {
-                alert(result); // Mensagem de sucesso ou erro
-            })
-            .catch(error => {
-                console.error("Erro ao enviar o formulário: ", error);
-            });
-        });
+           fetch('https://script.google.com/macros/s/AKfycbzOv1nGc5ry0HgdBhkvc0HfnxsAotqgyajuIOGke25BAaVCtT_LCzyId8n7z4a-uAvGkQ/exec', {
+  method: 'POST',
+  body: new URLSearchParams(dadosReserva)
+})
+.then(response => response.text())
+.then(data => {
+  abrirModal('Dados enviados com sucesso.');
+})
+.catch(error => {
+  abrirModal('Erro ao enviar os dados: ' + error);
+});
 
 
     function abrirModal(mensagem) {
