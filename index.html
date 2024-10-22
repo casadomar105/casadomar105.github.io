@@ -648,7 +648,7 @@ input, select {
             <button type="submit">Enviar</button>
         </form>
 
-        <!-- Modal -->
+      <!-- Modal -->
 <div id="modal" class="modal" style="display:none;">
   <div class="modal-content">
     <span class="close" onclick="fecharModal()">&times;</span>
@@ -1279,6 +1279,8 @@ function salvarExcel() {
             }
         }
 
+
+    
 function abrirModal(mensagem) {
   document.getElementById('mensagemModal').innerText = mensagem;
   document.getElementById('modal').style.display = "block";
@@ -1287,6 +1289,7 @@ function abrirModal(mensagem) {
 function fecharModal() {
   document.getElementById('modal').style.display = "none";
 }
+
 
     
 // Salvar XLSX (Planilha Google)
